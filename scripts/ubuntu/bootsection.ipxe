@@ -1,0 +1,5 @@
+:%ENTRY_NAME%
+set boot-url %HTTP_URL%
+#initrd ${boot-url}/images/pxeboot/initrd.img
+#kernel ${boot-url}/images/pxeboot/vmlinuz inst.repo=${boot-url}/ ip=dhcp ipv6.disable initrd=initrd.img inst.geoloc=0 devfs=nomount
+boot

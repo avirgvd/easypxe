@@ -1,0 +1,12 @@
+[Unit]
+Description=BMA Utils service with REST
+After=network.target
+
+[Service]
+User=root
+Group=root
+WorkingDirectory=/usr/local/easypxe/utils
+ExecStart=/usr/bin/python3 service.py
+
+[Install]
+WantedBy=multi-user.target

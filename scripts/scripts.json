@@ -1,0 +1,26 @@
+[
+  {
+    "osType": "RHEL",
+    "path": "/usr/local/easypxe/scripts/rhel/"
+  },
+  {
+    "osType": "CLONEZILLA",
+    "path": "/usr/local/easypxe/scripts/clonezilla/"
+  },
+  {
+    "osType": "UBUNTU",
+    "path": "/usr/local/easypxe/scripts/ubuntu/"
+  },
+  {
+    "osType": "WINDOWS",
+    "path": "/usr/local/easypxe/scripts/win/"
+  },
+  {
+    "osType": "WINDOWS_MDT",
+    "path": "/usr/local/easypxe/scripts/win_mdt/"
+  },
+  {
+    "osType": "Firmware_Bundle",
+    "path": "not applicable"
+  }
+]

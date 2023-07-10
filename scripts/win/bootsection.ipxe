@@ -1,0 +1,12 @@
+:%ENTRY_NAME%
+imgfree
+#set boot-url http://192.168.3.64/pxe/5a3a40df6de54755b6700315ac78bb58
+set boot-url %HTTP_URL%
+kernel wimboot
+initrd ${boot-url}/install.bat              install.bat
+initrd ${boot-url}/winpeshl.ini             winpeshl.ini
+initrd -n BCD ${boot-url}/boot/bcd          BCD
+initrd ${boot-url}/boot/boot.sdi     boot.sdi
+initrd -n boot.wim ${boot-url}/sources/boot.wim  boot.wim
+imgstat
+boot

@@ -1,0 +1,15 @@
+[Unit]
+Description=uWSGI instance to serve bma-server
+After=network.target
+
+[Service]
+User=easypxe
+Group=nginx
+WorkingDirectory=/usr/local/easypxe/bin
+Environment="PATH=/usr/bin:/usr/sbin:/usr/local/bin"
+# Using --lazy to ensure Python threads work properly under uwsgi
+ExecStart=/usr/local/bin/uwsgi --socket 127.0.0.1:3031 --lazy --ini easypxe.ini
+#SELinuxContext=system_u:system_r:httpd_sys_script_t:s0
+
+[Install]
+WantedBy=multi-user.target

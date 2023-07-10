@@ -1,0 +1,15 @@
+#!ipxe
+
+:start
+menu EasyPXE Boot Options
+item shell iPXE shell
+#PLACE_MARKER1
+item exit  Exit to UEFI/BIOS
+
+choose --default 1 --timeout 120000 option && goto ${option}
+
+:shell
+shell
+#PLACE_MARKER2
+:exit
+exit

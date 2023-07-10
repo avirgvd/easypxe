@@ -1,0 +1,13 @@
+:%ENTRY_NAME%
+imgfree
+#set boot-url http://192.168.3.64/pxe/5a3a40df6de54755b6700315ac78bb58
+set boot-url %HTTP_URL%
+kernel wimboot
+initrd -n BCD ${boot-url}/Deploy/Boot/x64/Boot/BCD              BCD
+initrd -n boot.sdi ${boot-url}/Deploy/Boot/x64/Boot/boot.sdi     boot.sdi
+initrd -n boot.wim ${boot-url}/Deploy/Boot/LiteTouchPE_x64.wim  boot.wim
+initrd -n LiteTouchPE_x64.xml ${boot-url}/Deploy/Boot/LiteTouchPE_x64.xml       LiteTouchPE_x64.xml
+initrd -n Bootstrap.ini ${boot-url}/Bootstrap.ini        Bootstrap.ini
+initrd -n CustomSettings.ini ${boot-url}/Deploy/Control/CustomSettings.ini      CustomSettings.ini
+imgstat
+boot

@@ -1,0 +1,7 @@
+:%ENTRY_NAME%
+set boot-url %HTTP_URL%
+kernel ${boot-url}/live/vmlinuz boot=live union=overlay config noswap nolocales edd=on nomodeset vga=788 nosplash noprompt fetch=${boot-url}/live/filesystem.squashfs ocs_repository="%SAMBA_URL%"
+initrd ${boot-url}/live/initrd.img
+boot
+
+
