@@ -43,10 +43,10 @@ CentOS 7.x, RHEL 7.x, or SLES15 VM with 8 VCPUs and 8GB or more.
 50 GB or more. Storage requirement for OS image ISO files.
 
 #### Ports to be allowed by Firewall
-5000 – Incoming traffic on this port for BMA server side component
+5000 – Incoming traffic on this port for EasyPXE server side component
 80 – Web-UI and HTTP File server
 
-#### Enable the HTTP/HTTPS service in the VM that is running BMA
+#### Enable the HTTP/HTTPS service in the VM that is running EasyPXE
 sudo firewall-cmd --zone=public --permanent --add-service=http
 sudo firewall-cmd --zone=public --permanent --add-service=https
 
@@ -54,17 +54,17 @@ sudo firewall-cmd --zone=public --permanent --add-service=https
 ### Setup
 The installation can be performed using the following steps:
 
-1. Download/Extract the BMA.tar or git clone the BMA repository to the local directory in the CentOS/RHEL host. This will be install directory for the tool.
+1. Download/Extract the EasyPXE.tar or git clone the EasyPXE repository to the local directory in the CentOS/RHEL host. This will be install directory for the tool.
 
 2. Initialize and install the python code by running the following command.
 
 ``` python setup.py install ```
 
-Note: This module depends on Python3. If the default interpreter is not python3, perform the setup tasks using python3. If bma should be installed only for currently running user, use --user option.
+Note: This module depends on Python3. If the default interpreter is not python3, perform the setup tasks using python3. Use --user option to install only for the current user.
 
 ``` python3 setup.py install ```
 
-This command installs all the required pre-requisites from requirements.txt, creates the directory hierarchy and enables BMA as a systemd service.
+This command installs all the required pre-requisites from requirements.txt, creates the directory hierarchy and enables EasyPXE as a systemd service.
 
 ### Configuration
 
@@ -72,44 +72,60 @@ This command installs all the required pre-requisites from requirements.txt, cre
 
 | Directory | Description |
 | ---------:|:-----------:|
-| /usr/local/bma      |  Default path for all EasyPXE related files
+| /usr/local/easypxe      |  Default path for all EasyPXE related files
 | /usr/local/easypxe/etc  |  Configuration files of EasyPXE
 | /usr/local/easypxe/lib  |  All dependent python libraries
 | /usr/local/easypxe/bin  |  Binaries of EasyPXE
-| /usr/local/easypxe/data |  All data files
+| /usr/local/easypxe/data |  All data files – This would include all the config giul, osimages, etc.,
 | /usr/local/easypxe/logs  |  Log files
 
 2. Edit the configuration in the following path `/usr/local/easypxe/etc/config.ini`
 
 | Parameter | Default    |   Description  |
 | ---------:|:----------:|:----------:|
-| server    | **Mandatory**  | **IP address of the BMA server (Mandatory)**
-| port      |   5000     | Port to run the REST API server on the BMA server
-| log_path  | /usr/local/easypxe/logs | Path for the BMA log directory
+| server    | **Mandatory**  | **IP address of the EasyPXE server (Mandatory)**
+| port      |   5000     | Port to run the REST API server on the EasyPXE server
+| log_path  | /usr/local/easypxe/logs | Path for the EasyPXE log directory
 | log_level | INFO       | Log level
 
 ### Service
 
-**IMP: Ensure BMA server IP address is updated in the configuration file `/usr/local/easypxe/etc/config.ini`. **
-**This IP address setting is essential for BMA functionality.**
+**IMP: Ensure EasyPXE server IP address is updated in the configuration file `/usr/local/easypxe/etc/config.ini`. **
+**This IP address setting is essential for EasyPXE functionality.**
 
-1. Load the BMA service by reloading the systemd
+1. Load the EasyPXE service by reloading the systemd
 
 `systemctl daemon-reload`
 
-2. Start the bma server using systemd service
+2. Start the easypxe server using systemd service
 
 `systemctl start easypxe-service.service`
 `systemctl start easypxe-utils.service`
 
-The BMA server backend will be started on server address and host specified in the config file
+The EasyPXE server backend will be started on server address and host specified in the config file
 
-### Install BMA Web Client
+### Install EasyPXE Web Client
 
 Run the below command to install and configure web server:
 
-Now the tool should be ready. To access the Web-UI from browser, use the url http://<host-IP-address>/ where “host-IP address in the IP address of the host that is running the BMA tool.
+``` ./configureWeb.sh ```
+
+**IMP: The above script can install the Web Client only on Apache HTTPD server running local to machine where EasyPXE service is running**
+
+Now the tool should be ready. To access the Web-UI from browser, use the url http://<host-IP-address>/ where “host-IP address in the IP address of the host that is running the EasyPXE tool.
 
 
 
 ## Limitations and known issues
+
+| S.No| Limitation/Known issue                         | Remarks                             |
+|--------|------------------------------------------------|-------------------------------------|
+| 1   | Gen9 support is not available for Synergy blades	|  |
+| 2   | With “secure boot” enabled in BIOS, SSH service will not be enabled by default for hosted deployed with ESXi| This is limitation by VMWare ESXi kickstart. Investigating a work-around.|
+| 3   | Bulk deployment using JSON is disabled in the UI         | This feature is not enabled as enough testing not done|
+| 4   | Legacy BIOS is not supported         | This support can be added on request |
+| 5   | DHCP option not selectable | This feature will be enabled in next version|
+| 6 | Web-UI doesn’t show error messages when any operation is failed on the server side. | Work in progress |
+| 7 | Setup script shows error message “Could not find a version that satisfies the requirement Click==7.0” | Ignore this error.| 
+
+
