@@ -30,50 +30,6 @@ def geniso(uri, osType, isoPath, targetDir, purpose, hostOSdistro):
     elif 'result' in res:
         return res['result']
 
-def genisoEmbeddedKS(taskId, osType, isoPath, targetDir, ksFile, hostOSdistro):
-
-    request_json = {
-        "osType": osType,
-        "isoPath": isoPath,
-        "targetDir": targetDir,
-        "hostOSdistro": hostOSdistro,
-        "ksFile": ksFile
-    }
-
-    logging.debug("geniso: {}".format(request_json))
-
-    # REST call to bma_utils
-    url = f"http://localhost:5002/rest/gen_iso_embedded_ks/{taskId}"
-    headers = {'Accept': 'application/json', 'Content-Type': 'application/json'}
-    response = requests.post(url, headers=headers, data=json.dumps(request_json))
-    logging.debug(response)
-
-    task = response.json()
-    logging.debug(f"res: {task}")
-
-    generated_iso_filename = ""
-
-    if 'status' in task and task['status'] == "In-Progress":
-        # Poll for asynchronous task status every 10 secs for 300 secs
-        count = 120
-        while count > 0:
-            count = count - 1
-            res = requests.get(f"http://localhost:5002/rest/task/{taskId}", headers=headers)
-            task_info = res.json()
-            logging.debug(f"task info: {task_info}")
-            if 'status' in task_info and task_info['status'] == "Completed":
-                generated_iso_filename = task_info['filename']
-                logging.debug(f"task completed for ISO {generated_iso_filename}")
-                break
-            else:
-                # Wait for 10 seconds
-                time.sleep(10)
-
-    if generated_iso_filename == "":
-        raise Exception(f"Failed to generate ISO image for task {taskId}")
-
-    return generated_iso_filename
-
 
 def cleanup(taskId, subtaskId):
     logging.debug("Cleanup the generated images")

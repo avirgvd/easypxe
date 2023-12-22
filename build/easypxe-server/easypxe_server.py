@@ -256,20 +256,6 @@ def create_app():
             return jsonify({"result": {}, 'error': err})
 
 
-    ####################### START OF Kickstarts and Scripts APIs #################
-
-    @app.route('/rest/ksconfig/<os>', methods=['GET'])
-    @jwt_required()
-    def getKSConfigURL(osType):
-        try:
-            logging.debug("getKSConfigURL: ")
-            logging.debug(request.headers)
-            logging.debug("########################: ")
-        except Exception as err:
-            logging.exception(err)
-            return jsonify({"result": {}, 'error': err})
-    ####################### START OF Kickstarts and Scripts APIs #################
-
     ####################### START OF Tasks APIs #################
     @app.route('/rest/tasks/<int:taskid>', methods=['GET'])
     @jwt_required()
@@ -297,20 +283,6 @@ def create_app():
             return jsonify({"result": {}, 'error': err})
 
     ####################### END OF Tasks APIs #################
-
-    # @app.route('/rest/lc/env/add', methods=['POST'])
-    # @jwt_required()
-    # def addLCEnvironment():
-    #     try:
-    #         logging.debug("addLCEnvironment.............")
-    #         logging.debug(request.json)
-    #         logging.debug(json.dumps(request.json))
-    #         result = bma.addLCEnv((request.json))
-    #         return jsonify(result)
-    #     except Exception as err:
-    #         logging.exception(err)
-    #         return jsonify({"result": {}, 'error': err})
-
 
 
     ################ START OF PXE Service API ######################

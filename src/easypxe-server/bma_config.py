@@ -32,7 +32,7 @@ class DefaultConfig():
         try:
             if self.getDistroName() in ['sles']:
                 return '/srv/www/htdocs/images/'
-            elif self.getDistroName() in ['rhel', 'centos']:
+            elif self.getDistroName() in ['rhel', 'rocky', 'centos']:
                 # return '/var/lib/bma/'
                 return '/usr/share/nginx/html/images/'
             else:
@@ -44,7 +44,7 @@ class DefaultConfig():
         try:
             if self.getDistroName() in ['sles']:
                 return '/srv/www/htdocs/pxe/'
-            elif self.getDistroName() in ['rhel', 'centos']:
+            elif self.getDistroName() in ['rhel', 'rocky', 'centos']:
                 # return '/var/lib/bma/'
                 return '/usr/share/nginx/html/pxe/'
             else:

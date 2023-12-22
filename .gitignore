@@ -4,3 +4,7 @@ node_modules
 package-lock.json
 .DS_store
 dist
+build_package
+build_package/*
+build
+build/*

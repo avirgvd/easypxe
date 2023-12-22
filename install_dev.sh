@@ -60,7 +60,7 @@ sudo mkdir -p /usr/local/easypxe/logs
 sudo mkdir -p /usr/share/nginx/html/pxe
 sudo mkdir -p /usr/local/easypxe/tftpboot
 sudo chcon -t tftpdir_t /usr/local/easypxe/tftpboot
-sudo cp /usr/share/ipxe/{undionly.kpxe,ipxe.efi,ipxe*.efi} /usr/local/easypxe/tftpboot
+sudo cp /usr/share/ipxe/{undionly.kpxe,ipxe*.efi} /usr/local/easypxe/tftpboot
 sudo mkdir -p /usr/local/easypxe/tftpboot/menu
 #sudo curl -o /usr/local/easypxe/tftpboot/menu/wimboot -L https://github.com/ipxe/wimboot/releases/download/v2.7.4/wimboot
 sudo firewall-cmd --add-service=dhcp --permanent
